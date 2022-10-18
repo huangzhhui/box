@@ -28,6 +28,7 @@ class BuildCommand extends AbstractCommand
         $this->addOption('name', '', InputOption::VALUE_OPTIONAL, 'The name of the output bin.', 'hyperf');
         $this->addOption('output', 'o', InputOption::VALUE_OPTIONAL, 'The output path of bin.', '.');
         $this->addOption('dev', 'd', InputOption::VALUE_NEGATABLE, 'Require the dev composer packages or not.', true);
+        $this->addOption('debug', '', InputOption::VALUE_NONE, 'Execute the command with DEBUG Mode');
     }
 
     public function handle()
@@ -40,6 +41,7 @@ class BuildCommand extends AbstractCommand
         $path = $this->input->getArgument('path');
         $binName = $this->input->getOption('name');
         $outputPath = $this->input->getOption('output');
+        $debug = $this->input->getOption('debug');
         $runtimePath = $this->getRuntimePath();
         $currentPhpVersion = $this->getCurrentPhpVersion();
         $extension = '';
@@ -75,6 +77,9 @@ class BuildCommand extends AbstractCommand
                 $micro,
                 $outputBin
             );
+        }
+        if ($debug) {
+            $this->logger->debug(sprintf('Command: %s', $fullCommand));
         }
         $this->liveCommand($fullCommand);
         if (file_exists($outputBin)) {

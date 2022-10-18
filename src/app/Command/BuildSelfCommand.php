@@ -33,6 +33,7 @@ class BuildSelfCommand extends BuildCommand
         $defaultOutputPath = $this->config->getConfig('path.bin', getenv('HOME') . '/.box');
         $this->addOption('output', 'o', InputOption::VALUE_OPTIONAL, 'The output path of bin.', $defaultOutputPath);
         $this->addOption('dev', 'd', InputOption::VALUE_NEGATABLE, 'Require the dev composer packages or not.', true);
+        $this->addOption('debug', '', InputOption::VALUE_NONE, 'Execute the command with DEBUG Mode');
     }
 
     protected function buildComposerNoDevCommand(string $php, string $composer): string
